@@ -3,6 +3,7 @@ import '../providers/products_provider.dart';
 import 'package:provider/provider.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
+  const ProductDetailsScreen({super.key});
   /* final String title;
 
   ProductDetailsScreen(this.title); */

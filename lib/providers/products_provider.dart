@@ -38,7 +38,12 @@ class Products with ChangeNotifier {
     ),
   ];
 
+  //var _showFavouritesOnly = false;
+
   List<Product> get items {
+    /*  if (_showFavouritesOnly) {
+      return _items.where((prodItem) => prodItem.isFavourite).toList();
+    } */
     return [..._items];
   }
   //todo capire bene perche si usano i tre punti
@@ -50,5 +55,19 @@ class Products with ChangeNotifier {
   void addProduct() {
     // _items.add(value);
     notifyListeners();
+  }
+
+  /* void showFavouritesOnly() {
+    _showFavouritesOnly = true;
+    notifyListeners();
+  }
+
+  void showAll() {
+    _showFavouritesOnly = false;
+    notifyListeners();
+  } */
+
+  List<Product> get favouriteItems {
+    return _items.where((prodItem) => prodItem.isFavourite).toList();
   }
 }
