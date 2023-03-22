@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 
+import '../screens/product_details_screen.dart';
+
+import 'package:provider/provider.dart';
+
+import '../providers/product.dart';
+
 class ProductItem extends StatelessWidget {
-  final String id;
+  /* final String id;
   final String title;
   final String imageUrl;
 
@@ -9,22 +15,27 @@ class ProductItem extends StatelessWidget {
     this.id,
     this.title,
     this.imageUrl,
-  );
+  ); */
   @override
   Widget build(BuildContext context) {
+    final product = Provider.of<Product>(context);
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: GridTile(
         footer: GridTileBar(
           backgroundColor: Colors.black87,
           leading: IconButton(
-            icon: const Icon(Icons.favorite),
-            onPressed: () {},
+            icon: Icon(
+              product.isFavourite ? Icons.favorite : Icons.favorite_border,
+            ),
+            onPressed: () {
+              product.toggleFavouritesStatus();
+            },
             color: Theme.of(context).primaryColorLight,
           ),
           title: Text(
             style: const TextStyle(fontSize: 13),
-            title,
+            product.title,
             textAlign: TextAlign.center,
           ),
           trailing: IconButton(
@@ -33,9 +44,17 @@ class ProductItem extends StatelessWidget {
             color: Theme.of(context).primaryColorLight,
           ),
         ),
-        child: Image.network(
-          imageUrl,
-          fit: BoxFit.cover,
+        child: GestureDetector(
+          onTap: () {
+            Navigator.of(context).pushNamed(
+              ProductDetailsScreen.routeName,
+              arguments: product.id,
+            ); //in questo modo passiamo l'id allo screen che vogliamo e attraverso l'id posso prendermi tutti i dati associati a quell'id
+          },
+          child: Image.network(
+            product.imageUrl,
+            fit: BoxFit.cover,
+          ),
         ),
       ),
     );
